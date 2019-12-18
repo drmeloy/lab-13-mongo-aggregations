@@ -88,4 +88,113 @@ describe('incidents routes', () => {
         });
       });
   });
+
+  it('can get an incident by id', () => {
+    return request(app)
+      .get(`/api/v1/incidents/${incident._id}`)
+      .then(res => {
+        expect(res.body).toEqual({
+          _id: incident._id.toString(),
+          date: incidentDate.toISOString(),
+          state: 'Idaho',
+          cityOrCounty: 'Ada',
+          address: '456 E Blah Blah Ln',
+          numberKilled: 0,
+          numberInjured: 0,
+          gunType: 'Rocket launcher',
+          incidentCharacteristics: '\'Twas crazy!',
+          locationDescription: 'Jim-Bob\'s farmhouse',
+          numberOfGunsInvolved: 1,
+          notes: 'Nobody knows where Jim-Bob got a rocket launcher. Everyone just glad nobody got hurt.',
+          participantAge: '75',
+          participantGender: 'Male',
+          participantRelationship: 'Owner',
+          participantStatus: 'Uninjured',
+          participantType: 'Self-victim',
+          __v: 0
+        });
+      });
+  });
+
+  it('can get all incidents', () => {
+    return request(app)
+      .get('/api/v1/incidents')
+      .then(res => {
+        expect(res.body).toContainEqual({
+          _id: incident._id.toString(),
+          date: incidentDate.toISOString(),
+          state: 'Idaho',
+          cityOrCounty: 'Ada',
+          address: '456 E Blah Blah Ln',
+          numberKilled: 0,
+          numberInjured: 0,
+          gunType: 'Rocket launcher',
+          incidentCharacteristics: '\'Twas crazy!',
+          locationDescription: 'Jim-Bob\'s farmhouse',
+          numberOfGunsInvolved: 1,
+          notes: 'Nobody knows where Jim-Bob got a rocket launcher. Everyone just glad nobody got hurt.',
+          participantAge: '75',
+          participantGender: 'Male',
+          participantRelationship: 'Owner',
+          participantStatus: 'Uninjured',
+          participantType: 'Self-victim',
+          __v: 0
+        });
+      });
+  });
+
+  it('can update an incident', () => {
+    return request(app)
+      .patch(`/api/v1/incidents/${incident._id}`)
+      .send({ gunType: 'Water cannon'})
+      .then(res => {
+        expect(res.body).toEqual({
+          _id: incident._id.toString(),
+          date: incidentDate.toISOString(),
+          state: 'Idaho',
+          cityOrCounty: 'Ada',
+          address: '456 E Blah Blah Ln',
+          numberKilled: 0,
+          numberInjured: 0,
+          gunType: 'Water cannon',
+          incidentCharacteristics: '\'Twas crazy!',
+          locationDescription: 'Jim-Bob\'s farmhouse',
+          numberOfGunsInvolved: 1,
+          notes: 'Nobody knows where Jim-Bob got a rocket launcher. Everyone just glad nobody got hurt.',
+          participantAge: '75',
+          participantGender: 'Male',
+          participantRelationship: 'Owner',
+          participantStatus: 'Uninjured',
+          participantType: 'Self-victim',
+          __v: 0
+        });
+      });
+  });
+
+  it('can delete an incident', () => {
+    return request(app)
+      .delete(`/api/v1/incidents/${incident._id}`)
+      .then(res => {
+        expect(res.body).toEqual({
+          _id: incident._id.toString(),
+          date: incidentDate.toISOString(),
+          state: 'Idaho',
+          cityOrCounty: 'Ada',
+          address: '456 E Blah Blah Ln',
+          numberKilled: 0,
+          numberInjured: 0,
+          gunType: 'Rocket launcher',
+          incidentCharacteristics: '\'Twas crazy!',
+          locationDescription: 'Jim-Bob\'s farmhouse',
+          numberOfGunsInvolved: 1,
+          notes: 'Nobody knows where Jim-Bob got a rocket launcher. Everyone just glad nobody got hurt.',
+          participantAge: '75',
+          participantGender: 'Male',
+          participantRelationship: 'Owner',
+          participantStatus: 'Uninjured',
+          participantType: 'Self-victim',
+          __v: 0
+        })
+      })
+  });
 });
